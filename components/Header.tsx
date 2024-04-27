@@ -25,7 +25,7 @@ export default function Header() {
         />
       </div>
       <h1 className="sr-only">ESGI Telecom SaaS App</h1>
-      <p className="text-3xl lg:text-4xl !leading-tight mx-auto max-w-xl text-center">
+      <p className="text-2xl lg:text-4xl !leading-tight mx-auto max-w-xl text-center">
         La solution optimale pour gérer{" "}
         <a
           href="#"
