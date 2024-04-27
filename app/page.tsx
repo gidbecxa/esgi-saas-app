@@ -4,6 +4,8 @@ import { createClient } from "@/utils/supabase/server";
 import ConnectSupabaseSteps from "@/components/tutorial/ConnectSupabaseSteps";
 import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
 import Header from "@/components/Header";
+import SignUpComptabSteps from "@/components/tutorial/SignUpComptSteps";
+import SignUpAdminSteps from "@/components/tutorial/SignUpAdminSteps";
 
 export default async function Index() {
   const canInitSupabaseClient = () => {
@@ -28,11 +30,16 @@ export default async function Index() {
         </div>
       </nav>
 
-      <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
+      <div className="animate-in flex-1 flex flex-col gap-12 opacity-0 max-w-4xl px-3">
         <Header />
         <main className="flex-1 flex flex-col gap-6">
-          <h2 className="font-bold text-4xl mb-4">Next steps</h2>
-          {isSupabaseConnected ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
+          <h2 className="font-bold text-3xl mb-4">Comment utiliser</h2>
+          <section className="flex-1 flex flex-row gap-6">
+            <SignUpUserSteps />
+            <SignUpComptabSteps />
+            <SignUpAdminSteps />
+          </section>
+          {/* {isSupabaseConnected ? <SignUpUserSteps /> : <ConnectSupabaseSteps />} */}
         </main>
       </div>
 
@@ -40,12 +47,12 @@ export default async function Index() {
         <p>
           Powered by{" "}
           <a
-            href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
+            href="/"
             target="_blank"
             className="font-bold hover:underline"
             rel="noreferrer"
           >
-            Supabase
+            ESGI Telecom
           </a>
         </p>
       </footer>

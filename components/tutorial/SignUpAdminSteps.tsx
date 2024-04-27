@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Step from "./Step";
 
-export default function SignUpUserSteps() {
+export default function SignUpAdminSteps() {
   return (
     <ol className="flex flex-col gap-6">
-      <Step title="Pour les commerciaux">
+      <Step title="Pour les Admins">
         <p>
           Veuillez naviguer à la page de {" "}
           <Link
@@ -13,7 +13,7 @@ export default function SignUpUserSteps() {
           >
             Connexion
           </Link>{" "}
-          et vous connecter à votre compte de commercial. Vous pouvez désormais accéder à votre espace de commercial pour gérer des dépenses. Nous vous rendons le processus très optimisé!
+          et vous connecter à votre compte d'admin. Vous pourriez désormais accéder à votre dashboard d'admin pour la gestion des utilisateurs et du système. Nous vous rendons le processus très optimisé!
         </p>
       </Step>
     </ol>
