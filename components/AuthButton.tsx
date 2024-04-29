@@ -28,7 +28,7 @@ export default async function AuthButton() {
     </div>
   ) : (
     <Link
-      href="/login"
+      href="/create"
       className="py-2 px-6 text-base flex rounded-xl no-underline bg-btn-background hover:bg-btn-background-hover font-medium"
     >
       Connexion
