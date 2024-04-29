@@ -64,7 +64,7 @@ export default function CreateUserAccount({
             {/* Left column - Form */}
             <form
                 // onSubmit={}
-                className="lg:w-3/5 px-8 py-6 lg:py-12 lg:px-48 lg flex flex-col flex-1 justify-center gap-6"
+                className="lg:w-3/5 px-8 py-10 lg:py-12 lg:px-48 lg flex flex-col flex-1 justify-center gap-6"
             >
                 <h1 className="text-2xl text-dark-background mb-4">Créer un compte</h1>
 
