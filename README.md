@@ -1,93 +1,262 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+# Présentation du Projet Appli ESGI avec Next.js
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
+### Introduction
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+Bienvenue dans la présentation de notre projet Next.js que nous avons développé jusqu'à présent. Dans ce guide, nous explorerons les différentes étapes de la création de ce projet, en commençant par son initialisation et en examinant sa structure de fichiers. Commençons !
 
-## Features
+---
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Middleware
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+### 1. Initialisation du Projet
 
-## Demo
+Pour commencer, nous avons initialisé notre projet en utilisant Next.js, un framework populaire pour le développement d'applications React. Voici un aperçu du fichier `package.json` qui contient les dépendances du projet :
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+```tsx
+{
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@nextui-org/react": "^2.3.6",
+    "@supabase/ssr": "latest",
+    "@supabase/supabase-js": "latest",
+    // Autres dépendances...
+  },
+  "devDependencies": {
+    "@types/node": "20.11.5",
+    "@types/react": "18.2.48",
+    "@types/react-dom": "18.2.18",
+    // Autres dépendances de développement...
+  }
+}
+```
 
-## Deploy to Vercel
+Ce fichier contient les scripts pour démarrer, construire et lancer l'application Next.js, ainsi que les dépendances nécessaires à notre projet, telles que Supabase pour la gestion de la base de données et Tailwind CSS pour le stylage.
 
-Vercel deployment will guide you through creating a Supabase account and project.
+### 2. Structure du Projet
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+La structure de notre projet est organisée de manière à faciliter le développement et la maintenance. Voici un aperçu des principaux dossiers et fichiers :
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This%20starter%20configures%20Supabase%20Auth%20to%20use%20cookies%2C%20making%20the%20user's%20session%20available%20throughout%20the%20entire%20Next.js%20app%20-%20Client%20Components%2C%20Server%20Components%2C%20Route%20Handlers%2C%20Server%20Actions%20and%20Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png&integration-ids=oac_VqOgBHqhEoFTPzGkPd7L0iH6)
+  - `components`: Ce dossier contient les composants React réutilisables utilisés dans tout le projet.
+  - `pages`: Ce dossier contient les différentes pages de notre application, où chaque fichier représente une page unique.
+  - `utils`: Ce dossier contient les fonctions utilitaires utilisées dans tout le projet.
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+Voici une prévue du fichier `page.tsx` dans le dossier `app`, qui représente la page d'accueil de notre application :
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+```tsx
 
-## Clone and run locally
+import DeployButton from "../components/DeployButton";
+import AuthButton from "../components/AuthButton";
+// Importations d'autres composants...
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+export default function Index() {
+  return (
+    <div className="flex-1 w-full flex flex-col gap-20 items-center">
+      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
+        {/* Contenu de la barre de navigation */}
+      </nav>
 
-2. Create a Next.js app using the Supabase Starter template npx command
+      <div className="animate-in flex-1 flex flex-col gap-12 opacity-0 max-w-4xl px-3">
+        {/* Contenu principal de la page */}
+      </div>
 
-   ```bash
-   npx create-next-app -e with-supabase
-   ```
+      <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
+        {/* Pied de page */}
+      </footer>
+    </div>
+  );
+}
+```
 
-3. Use `cd` to change into the app's directory
+### 3. Dépendances du Projet
 
-   ```bash
-   cd name-of-new-app
-   ```
+Les dépendances de notre projet sont des bibliothèques externes nécessaires au bon fonctionnement de l'application. Nous utilisons des dépendances pour des fonctionnalités telles que la gestion de l'état, le stylage et l'authentification. Voici quelques-unes des dépendances importantes utilisées dans notre projet :
 
-4. Rename `.env.local.example` to `.env.local` and update the following:
+  - `@nextui-org/react`: Une bibliothèque de composants React pour une interface utilisateur moderne.
+  - `@supabase/ssr` et `@supabase/supabase-js`: Bibliothèques pour l'interaction avec la base de données Supabase.
+  - `tailwindcss`: Un framework CSS utilitaire pour styliser nos composants de manière rapide et efficace.
 
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=[INSERT SUPABASE PROJECT API ANON KEY]
-   ```
+Bien sûr ! Voici la suite de votre tutoriel :
 
-   Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` can be found in [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
+### 4. Connexion et Authentification
 
-5. You can now run the Next.js local development server:
+Dans cette étape, nous avons mis en place la fonctionnalité de connexion et d'authentification dans notre application. Cela nous permet d'authentifier les utilisateurs et de gérer leur accès à certaines fonctionnalités. Voici une prévue de la page de connexion `login/page.tsx` :
 
-   ```bash
-   npm run dev
-   ```
+```tsx
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
+import { SubmitButton } from "./submit-button";
+// Importations d'autres composants et fonctions...
 
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
+export default function Login({ searchParams }: { searchParams: { message: string } }) {
+  const signIn = async (formData: FormData) => {
+    // Fonction de connexion utilisateur
+  };
 
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
+  const signUp = async (formData: FormData) => {
+    // Fonction d'inscription utilisateur
+  };
 
-## Feedback and issues
+  const handleForgotPassword = () => {
+    // Fonction de réinitialisation du mot de passe
+  };
 
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
+  return (
+    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
+      {/* Contenu de la page de connexion */}
+    </div>
+  );
+}
+```
 
-## More Supabase examples
+Dans cette page, les utilisateurs peuvent saisir leurs informations de connexion et se connecter à l'application. Nous avons également inclus des fonctionnalités telles que l'inscription d'un nouvel administrateur et la réinitialisation du mot de passe.
 
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+### 5. Création d'un Compte Utilisateur
+
+Une autre fonctionnalité importante de notre application est la création d'un compte utilisateur. Cela permet aux utilisateurs de s'inscrire et d'accéder à des fonctionnalités supplémentaires de l'application. Voici une prévue de la page de création de compte `/create/page.tsx` :
+
+```tsx
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
+import { SubmitButton } from "../login/submit-button";
+// Importations d'autres composants et fonctions...
+
+export default function CreateUserAccount({ searchParams }: { searchParams: { message: string } }) {
+  const signUp = async (formData: FormData) => {
+    // Fonction d'inscription utilisateur
+  };
+
+  return (
+    <div className="flex flex-1 flex-col lg:flex-row w-full justify-center gap-2">
+      {/* Contenu de la page de création de compte utilisateur */}
+    </div>
+  );
+}
+```
+
+Sur cette page, les utilisateurs peuvent saisir les informations nécessaires pour créer leur compte, telles que leur nom, leur adresse e-mail et leur mot de passe.
+
+### 6. Gestion des Dépenses
+
+Enfin, une autre fonctionnalité clé de notre application est la gestion des dépenses. Cela permet aux utilisateurs de saisir et de suivre leurs dépenses, ce qui est essentiel pour la gestion financière. Voici une prévue du formulaire de saisie des dépenses `ExpenseForm.tsx` :
+
+```tsx
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { createClient } from '@/utils/supabase/client';
+import { SubmitButton } from '../login/submit-button';
+import DeployButton from '@/components/DeployButton';
+// Importations d'autres composants et fonctions...
+
+export default function ExpenseForm() {
+  const [formData, setFormData] = useState<ExpenseFormData>({
+    // Initialisation des données du formulaire
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    // Gestion des changements dans les champs du formulaire
+  };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    // Gestion du changement de fichier pour les documents joints
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    // Soumission du formulaire et envoi des données à la base de données
+  };
+
+  return (
+    <div className="flex-1 w-full flex flex-col px-4">
+      {/* Contenu du formulaire de saisie des dépenses */}
+    </div>
+  );
+}
+```
+
+Ce formulaire permet aux utilisateurs de saisir les détails de leurs dépenses, tels que le nom de la dépense, la catégorie, le coût, la description, et de télécharger des documents joints si nécessaire.
+
+D'accord, continuons avec les sections suivantes :
+
+### 7. Couche de Présentation
+
+Dans cette section, nous allons explorer la manière dont nous présentons notre application aux utilisateurs. Nous utilisons plusieurs composants pour cela, notamment le composant `Header` qui affiche un en-tête attrayant avec un aperçu de l'application et une description de son objectif. Voici un exemple du composant `Header` :
+
+```tsx
+import Image from "next/image";
+import appMockup from "../assets/mockup.png";
+
+export default function Header() {
+  return (
+    <div className="flex flex-col gap-16 items-center">
+      <div className="flex w-1/2 h-auto justify-center items-center">
+        <Image
+          src={appMockup}
+          alt="App Preview"
+          style={{ objectFit: 'cover' }}
+        />
+      </div>
+      <h1 className="sr-only">ESGI Telecom SaaS App</h1>
+      <p className="text-2xl lg:text-4xl !leading-tight mx-auto max-w-xl text-center">
+        La solution optimale pour gérer{" "}
+        <a
+          href="#"
+          target="_blank"
+          className="font-bold hover:underline"
+          rel="noreferrer"
+        >
+          les dépenses
+        </a>{" "}
+        des{" "}
+        <a
+          href="#"
+          target="_blank"
+          className="font-bold hover:underline"
+          rel="noreferrer"
+        >
+          commerciaux
+        </a>
+      </p>
+      <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
+    </div>
+  );
+}
+```
+
+Ce composant `Header` offre une première impression visuelle de notre application et fournit des informations essentielles sur son objectif.
+
+### 8. Stylisme et Design
+
+Maintenant, abordons la manière dont nous stylisons et concevons notre application pour offrir une expérience utilisateur agréable et intuitive. Nous utilisons des bibliothèques telles que Tailwind CSS pour le stylisme et Geist UI pour les composants d'interface utilisateur. Voici un exemple d'utilisation de la bibliothèque Geist UI dans notre application :
+
+```tsx
+import { Button } from '@geist-ui/react';
+
+export default function SignUpUserSteps() {
+  return (
+    <div className="flex flex-col items-center">
+      <h3 className="text-lg font-semibold">Étape 1</h3>
+      <p className="text-sm">Remplissez le formulaire d'inscription.</p>
+      <Button type="secondary">S'inscrire</Button>
+    </div>
+  );
+}
+```
+
+Nous utilisons également des composants personnalisés et des animations pour rendre notre application plus attrayante et conviviale pour l'utilisateur.
+
+### 9. Déploiement
+
+Enfin, discutons du processus de déploiement de notre application. Nous avons choisi d'utiliser la plateforme Vercel pour le déploiement en raison de sa simplicité, de son intégration transparente avec Next.js et de ses performances élevées. Voici un aperçu de notre utilisation de Vercel :
+
+- Création d'un compte sur Vercel et de liens avec notre référentiel GitHub.
+- Configuration des paramètres de déploiement, y compris les variables d'environnement et les autorisations d'accès.
+- Déploiement automatique à chaque nouvelle mise à jour du code source sur la branche principale du référentiel GitHub.
+
+Vercel facilite grandement le processus de déploiement de notre application et nous permet de fournir rapidement des mises à jour et des améliorations à nos utilisateurs.
+
+---
+
+Conclusion :
+
+Dans ce tutoriel, nous avons parcouru les principales fonctionnalités de notre application, depuis l'initialisation du projet Next.js jusqu'au déploiement sur Vercel. Nous avons également examiné la manière dont nous présentons notre application aux utilisateurs, le stylisme et le design que nous utilisons, ainsi que le processus de déploiement. Nous espérons que cela vous a donné un aperçu complet de notre travail jusqu'à présent et que vous êtes prêt à explorer davantage notre application !
