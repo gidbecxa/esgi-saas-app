@@ -123,7 +123,7 @@ export default function Login({
           Mot de passe oublié?
         </Link> */}
         <SubmitButton
-          // formAction={signUp}
+          formAction={signUp}
           className="border border-foreground/20 rounded-md px-4 py-2 text-dark-background mb-2"
           pendingText="Signing Up..."
         >
