@@ -66,7 +66,7 @@ export default function CreateUserAccount({
                 // onSubmit={}
                 className="lg:w-3/5 px-8 py-10 lg:py-12 lg:px-48 lg flex flex-col flex-1 justify-center gap-6"
             >
-                <h1 className="text-2xl text-dark-background mb-4">Créer un compte</h1>
+                <h1 className="text-2xl text-dark-background mb-4">Ajouter un utilisateur</h1>
 
                 {/* Insert form inputs here */}
                 <div className="flex flex-col">
@@ -158,7 +158,7 @@ export default function CreateUserAccount({
                     className="bg-primary rounded-md px-4 py-2 text-background font-semibold mb-2"
                     pendingText="Connexion en cours..."
                 >
-                    Se Connecter
+                    Ajouter
                 </SubmitButton>
             </form>
 
