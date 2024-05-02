@@ -26,7 +26,7 @@ export default function Login({
       return redirect("/login?message=Could not authenticate user");
     }
 
-    return redirect("/create");
+    return redirect("/");
   };
 
   const signUp = async (formData: FormData) => {
@@ -47,6 +47,7 @@ export default function Login({
     });
 
     if (error) {
+      console.log("Could not authenticate user", error);
       return redirect("/login?message=Impossible de valider cet utilisateur");
     }
 
@@ -117,19 +118,19 @@ export default function Login({
         >
           Se Connecter
         </SubmitButton>
-        {/* <Link
+        <Link
           href="/"
           className="border border-transparent rounded-md px-4 py-2 text-dark-background font-light text-center"
         >
           Mot de passe oublié?
-        </Link> */}
-        <SubmitButton
+        </Link>
+        {/* <SubmitButton
           formAction={signUp}
           className="border border-foreground/20 rounded-md px-4 py-2 text-sm text-dark-background mb-2"
           pendingText="Signing Up..."
         >
           S'inscrire (Admin)
-        </SubmitButton>
+        </SubmitButton> */}
         {searchParams?.message && (
           <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
             {searchParams.message}
