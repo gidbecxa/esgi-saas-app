@@ -32,8 +32,8 @@ export default function Login({
   const signUp = async (formData: FormData) => {
     "use server";
 
-    // const origin = headers().get("origin");
-    const origin = process.env.NEXT_PUBLIC_BASE_URL;
+    const origin = headers().get("origin");
+    // const origin = process.env.NEXT_PUBLIC_BASE_URL;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const supabase = createClient();
