@@ -32,7 +32,8 @@ export default function Login({
   const signUp = async (formData: FormData) => {
     "use server";
 
-    const origin = headers().get("origin");
+    // const origin = headers().get("origin");
+    const origin = process.env.NEXT_PUBLIC_BASE_URL;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const supabase = createClient();
@@ -46,10 +47,10 @@ export default function Login({
     });
 
     if (error) {
-      return redirect("/login?message=Could not authenticate user");
+      return redirect("/login?message=Impossible de valider cet utilisateur");
     }
 
-    return redirect("/login?message=Check email to continue sign in process");
+    return redirect("/login?message=Veuillez aller à votre inbox email pour continuer");
   };
 
   const handleForgotPassword = () => {
