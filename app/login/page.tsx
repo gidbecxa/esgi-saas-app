@@ -51,7 +51,7 @@ export default function Login({
       return redirect("/login?message=Impossible de valider cet utilisateur");
     }
 
-    return redirect("/login?message=Veuillez aller à votre inbox email pour continuer");
+    return redirect("/login?message=Nous vous avons envoyé un email pour continuer");
   };
 
   const handleForgotPassword = () => {
@@ -122,7 +122,7 @@ export default function Login({
           href="/"
           className="border border-transparent rounded-md px-4 py-2 text-dark-background font-light text-center"
         >
-          Mot de passe oublié?
+          Mot de passe oublié ?
         </Link>
         {/* <SubmitButton
           formAction={signUp}
