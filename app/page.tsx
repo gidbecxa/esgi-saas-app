@@ -6,7 +6,7 @@ import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
 import Header from "@/components/Header";
 import SignUpComptabSteps from "@/components/tutorial/SignUpComptSteps";
 import SignUpAdminSteps from "@/components/tutorial/SignUpAdminSteps";
-import Navbar from "@/components/Navbar";
+// import Navbar from "@/components/Navbar";
 
 export default async function Index() {
   const canInitSupabaseClient = () => {
