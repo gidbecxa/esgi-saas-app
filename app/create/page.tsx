@@ -6,36 +6,57 @@ import { SubmitButton } from "../login/submit-button";
 import Image from "next/image";
 import Link from "next/link";
 
-import serverBro from "../../assets/Server-bro.svg"
 import endpoint from "../../assets/Endpoint-cuate.svg"
 
-export default function CreateUserAccount({
+export default async function CreateUserAccount({
     searchParams,
 }: {
     searchParams: { message: string };
 }) {
+    const supabase = createClient();
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+        return redirect("/login");
+    }
 
     const signUp = async (formData: FormData) => {
         "use server";
 
         const origin = headers().get("origin");
+        const firstname = formData.get("firstName") as string;
+        const lastname = formData.get("lastName") as string;
         const email = formData.get("email") as string;
-        const password = formData.get("password") as string;
+        const numeroemployee = formData.get("employeeID") as string;
+        const pays = formData.get("pays") as string;
+        const telephone = formData.get("phone") as string;
+        const role = formData.get("role") as string;
+
         const supabase = createClient();
 
-        const { error } = await supabase.auth.signUp({
-            email,
-            password,
-            options: {
-                emailRedirectTo: `${origin}/auth/callback`,
-            },
-        });
+        console.log("Form data: ", telephone);
+
+        const { error } = await supabase.from('users').insert([
+            {
+                firstname,
+                lastname,
+                email,
+                numeroemployee,
+                pays,
+                telephone,
+                role: role.toLowerCase(),
+            }
+        ]);
 
         if (error) {
-            return redirect("/login?message=Could not authenticate user");
+            console.error('Error inserting data:', error);
+            return redirect("/create?message=L'ajout de cet utilisateur n'a pas abouti");
         }
 
-        return redirect("/login?message=Check email to continue sign in process");
+        return redirect("/create?message=L'action d'ajout du nouvel utilisateur est accomplie !");
     };
 
     return (
@@ -76,7 +97,7 @@ export default function CreateUserAccount({
                         </label>
                         <input
                             type="text"
-                            id="firstName"
+                            name="firstName"
                             placeholder="First Name"
                             // className="outlined-input"
                             className="lg:w-1/2 rounded-md px-4 py-2 bg-inherit border mb-6 z-20 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
@@ -87,7 +108,7 @@ export default function CreateUserAccount({
                         </label>
                         <input
                             type="text"
-                            id="lastName"
+                            name="lastName"
                             placeholder="Last Name"
                             // className="outlined-input"
                             className="lg:w-1/2 rounded-md px-4 py-2 bg-inherit border mb-6 z-20 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
@@ -99,7 +120,7 @@ export default function CreateUserAccount({
                     </label>
                     <input
                         type="email"
-                        id="email"
+                        name="email"
                         placeholder="Email"
                         // className="outlined-input"
                         className="rounded-md px-4 py-2 bg-inherit border mb-6 z-20 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
@@ -110,7 +131,7 @@ export default function CreateUserAccount({
                     </label>
                     <input
                         type="text"
-                        id="numeroID"
+                        name="employeeID"
                         placeholder="Numéro de l'employé"
                         // className="outlined-input"
                         className="rounded-md px-4 py-2 bg-inherit border mb-6 z-20 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
@@ -122,7 +143,7 @@ export default function CreateUserAccount({
                         </label>
                         <input
                             type="text"
-                            id="pays"
+                            name="pays"
                             placeholder="Pays"
                             // className="outlined-input"
                             className="lg:w-1/2 rounded-md px-4 py-2 bg-inherit border mb-6 z-20 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
@@ -133,7 +154,7 @@ export default function CreateUserAccount({
                         </label>
                         <input
                             type="tel"
-                            id="phone"
+                            name="phone"
                             placeholder="Numéro de Téléphone"
                             // className="outlined-input"
                             className="lg:w-1/2 rounded-md px-4 py-2 bg-inherit border mb-6 z-20 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
@@ -144,8 +165,8 @@ export default function CreateUserAccount({
                         Rôle
                     </label>
                     <input
-                        type="email"
-                        id="role"
+                        type="text"
+                        name="role"
                         placeholder="Rôle"
                         // className="outlined-input"
                         className="rounded-md px-4 py-2 bg-inherit border mb-6 z-20 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
@@ -154,7 +175,7 @@ export default function CreateUserAccount({
                 {/* Repeat for other form inputs */}
 
                 <SubmitButton
-                    // formAction={signIn}
+                    formAction={signUp}
                     className="bg-primary rounded-md px-4 py-2 text-background font-semibold mb-2"
                     pendingText="Connexion en cours..."
                 >
