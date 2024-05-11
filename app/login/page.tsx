@@ -84,7 +84,7 @@ export default function Login({
         Retour
       </Link>
 
-      <form className="animate-in p-12 flex flex-col w-full justify-center gap-2 text-foreground rounded-lg bg-white filter drop-shadow-xl">
+      <form className="animate-in p-8 mt-12 flex flex-col w-full justify-center gap-2 text-foreground rounded-lg bg-white filter drop-shadow-xl">
         <h1 className="text-2xl text-dark-background mb-4">Connectez-vous</h1>
 
         <label className="text-md text-dark-background" htmlFor="email">

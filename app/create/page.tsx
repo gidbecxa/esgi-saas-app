@@ -1,4 +1,3 @@
-import GeometricBackground from "@/components/geometric";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -7,20 +6,20 @@ import Image from "next/image";
 import Link from "next/link";
 
 import endpoint from "../../assets/Endpoint-cuate.svg"
+import AccessDeniedModal from "@/components/AccessDenied";
+import React from "react";
+import { checkAdminRole } from "@/utils/droits/roles";
 
 export default async function CreateUserAccount({
     searchParams,
 }: {
     searchParams: { message: string };
 }) {
-    const supabase = createClient();
+    const isAdmin = await checkAdminRole();
+    // console.log("User is admin?", isAdmin);
 
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-        return redirect("/login");
+    if (!isAdmin) {
+        return <AccessDeniedModal />
     }
 
     const signUp = async (formData: FormData) => {
@@ -82,10 +81,9 @@ export default async function CreateUserAccount({
                 Retour
             </Link>
 
-            {/* Left column - Form */}
+            {/* La colonne à gauche - Formulaire */}
             <form
-                // onSubmit={}
-                className="lg:w-3/5 px-8 py-10 lg:py-12 lg:px-48 lg flex flex-col flex-1 justify-center gap-6"
+                className="lg:w-3/5 p-8 mt-16 lg:py-12 lg:px-48 lg flex flex-col flex-1 justify-center gap-6"
             >
                 <h1 className="text-2xl text-dark-background mb-4">Ajouter un utilisateur</h1>
 
@@ -172,7 +170,6 @@ export default async function CreateUserAccount({
                         className="rounded-md px-4 py-2 bg-inherit border mb-6 z-20 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
                     />
                 </div>
-                {/* Repeat for other form inputs */}
 
                 <SubmitButton
                     formAction={signUp}
@@ -183,10 +180,9 @@ export default async function CreateUserAccount({
                 </SubmitButton>
             </form>
 
-            {/* Right column - Image */}
+            {/* La colonne à droite - Image */}
             <div className="hidden lg:block lg:w-2/5 relative">
                 <Image
-                    // src="https://images.unsplash.com/photo-1646628426948-f51a702a493a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     src={endpoint}
                     alt="Technology"
                     style={{ objectFit: 'contain' }}

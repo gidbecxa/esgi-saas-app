@@ -2,9 +2,11 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import AccessDeniedModal from "./AccessDenied";
+
+const supabase = createClient();
 
 export const updateDepenseCommentaire = async (id: number, commentaire: string) => {
-    const supabase = createClient();
     const { data, error } = await supabase
         .from('depenses')
         .update({ comment: commentaire })
@@ -18,3 +20,4 @@ export const updateDepenseCommentaire = async (id: number, commentaire: string) 
     console.log('Data from update:', data);
     return redirect("/depenses?message=L'insertion du commentaire est accomplie !");
 }
+

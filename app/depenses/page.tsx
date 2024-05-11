@@ -1,29 +1,17 @@
 import { Button, DatePicker, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from '@nextui-org/react';
 import Image from 'next/image';
-
-// import ExpenseTable from '@/components/Table';
 import ExpenseTable from '@/components/TableNextUI';
 import DeployButton from '@/components/DeployButton';
 import AuthButton from '@/components/AuthButton';
 import ChevronDown from '@/assets/chevron-down-svgrepo-com.svg';
 import SearchButton from '@/assets/search-4-svgrepo-com.svg'
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from 'next/navigation';
 import AccessDeniedModal from '@/components/AccessDenied';
+import { checkComptableRole } from '@/utils/droits/roles';
 
 const Dashboard: React.FC = async () => {
-    const supabase = createClient();
+    const isComptable = await checkComptableRole();
 
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
-    // console.log('User: ', user);
-
-    if (!user) {
-        return redirect("/login");
-    }
-
-    if (user.email !== 'telecomesgi@gmail.com') {
+    if (!isComptable) {
         return <AccessDeniedModal />
     }
 

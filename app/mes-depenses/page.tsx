@@ -6,19 +6,15 @@ import DeployButton from '@/components/DeployButton';
 import AuthButton from '@/components/AuthButton';
 import ChevronDown from '@/assets/chevron-down-svgrepo-com.svg';
 import SearchButton from '@/assets/search-4-svgrepo-com.svg'
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from 'next/navigation';
-// import AccessDeniedModal from '@/components/AccessDenied';
+import { checkCommercialRole } from '@/utils/droits/roles';
+import AccessDeniedModal from '@/components/AccessDenied';
 
 const MesDepenses: React.FC = async () => {
-    const supabase = createClient();
+    const isCommercial = await checkCommercialRole();
+    // console.log("User is commercial?", isCommercial);
 
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-        return redirect("/login");
+    if (!isCommercial) {
+        return <AccessDeniedModal />
     }
 
     return (
