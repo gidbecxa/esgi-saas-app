@@ -1,5 +1,3 @@
-import { createClient } from "@/utils/supabase/server";
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { SubmitButton } from "../login/submit-button";
 import Image from "next/image";
@@ -7,20 +5,41 @@ import Link from "next/link";
 
 import endpoint from "../../assets/Endpoint-cuate.svg"
 import AccessDeniedModal from "@/components/AccessDenied";
-import React from "react";
-import { checkAdminRole } from "@/utils/droits/roles";
+// import { checkAdminRole } from "@/utils/droits/roles";
+import { createClient } from "@/utils/supabase/server";
 
-export default async function CreateUserAccount({
-    searchParams,
-}: {
-    searchParams: { message: string };
-}) {
-    const supabase = createClient();
+export default async function CreateUserAccount(
+    // { searchParams, }: { searchParams: { message: string }; }
+) {
+    /* const supabase = createClient();
     const { data: { user }, error } = await supabase.auth.getUser();
 
     if (!user) {
         return redirect("/login");
-    }
+    } */
+
+    const checkAdminRole = async () => {
+        "use server";
+
+        const supabase = createClient();
+
+        const { data: { user }, error } = await supabase.auth.getUser();
+
+        if (!user) {
+            console.log("User not found!");
+            return redirect("/login");
+        }
+
+        const { data: userData, error: userError } = await supabase.from('users').select('role').eq('email', user?.email ?? '');
+        console.log("User data: ", userData);
+
+        if (userError) {
+            console.error('Couldn\'t fetch user\'s data: ', userError);
+            return false;
+        }
+
+        return userData?.[0]?.role === "admin";
+    };
 
     const isAdmin = await checkAdminRole();
     // console.log("User is admin?", isAdmin);
@@ -32,7 +51,6 @@ export default async function CreateUserAccount({
     const signUp = async (formData: FormData) => {
         "use server";
 
-        const origin = headers().get("origin");
         const firstname = formData.get("firstName") as string;
         const lastname = formData.get("lastName") as string;
         const email = formData.get("email") as string;

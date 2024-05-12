@@ -6,18 +6,39 @@ import DeployButton from '@/components/DeployButton';
 import AuthButton from '@/components/AuthButton';
 import ChevronDown from '@/assets/chevron-down-svgrepo-com.svg';
 import SearchButton from '@/assets/search-4-svgrepo-com.svg'
-import { checkCommercialRole } from '@/utils/droits/roles';
+// import { checkCommercialRole } from '@/utils/droits/roles';
 import AccessDeniedModal from '@/components/AccessDenied';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 
-const MesDepenses: React.FC = async () => {
-    const supabase = createClient();
+export default async function MesDepenses() {
+    /* const supabase = createClient();
     const { data: { user }, error } = await supabase.auth.getUser();
 
     if (!user) {
         return redirect("/login");
-    }
+    } */
+
+    const checkCommercialRole = async () => {
+        const supabase = createClient();
+
+        const { data: { user }, error } = await supabase.auth.getUser();
+
+        if (!user) {
+            console.log("User not found!");
+            return redirect("/login");
+        }
+
+        const { data: userData, error: userError } = await supabase.from('users').select('role').eq('email', user?.email ?? '');
+        console.log("User data: ", userData);
+
+        if (userError) {
+            console.error('Couldn\'t fetch user\'s data: ', userError);
+            return false;
+        }
+
+        return userData?.[0]?.role === "commercial";
+    };
 
     const isCommercial = await checkCommercialRole();
     // console.log("User is commercial?", isCommercial);
@@ -113,5 +134,3 @@ const MesDepenses: React.FC = async () => {
         </div>
     );
 };
-
-export default MesDepenses;

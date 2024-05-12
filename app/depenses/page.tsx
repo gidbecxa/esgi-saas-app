@@ -6,17 +6,38 @@ import AuthButton from '@/components/AuthButton';
 import ChevronDown from '@/assets/chevron-down-svgrepo-com.svg';
 import SearchButton from '@/assets/search-4-svgrepo-com.svg'
 import AccessDeniedModal from '@/components/AccessDenied';
-import { checkComptableRole } from '@/utils/droits/roles';
+// import { checkComptableRole } from '@/utils/droits/roles';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 
-const Dashboard: React.FC = async () => {
-    const supabase = createClient();
+export default async function Dashboard() {
+    /* const supabase = createClient();
     const { data: { user }, error } = await supabase.auth.getUser();
 
     if (!user) {
         return redirect("/login");
-    }
+    } */
+
+    const checkComptableRole = async () => {
+        const supabase = createClient();
+
+        const { data: { user }, error } = await supabase.auth.getUser();
+
+        if (!user) {
+            console.log("User not found!");
+            return redirect("/login");
+        }
+
+        const { data: userData, error: userError } = await supabase.from('users').select('role').eq('email', user?.email ?? '');
+        console.log("User data: ", userData);
+
+        if (userError) {
+            console.error('Couldn\'t fetch user\'s data: ', userError);
+            return false;
+        }
+
+        return userData?.[0]?.role === "comptable";
+    };
 
     const isComptable = await checkComptableRole();
 
@@ -112,5 +133,3 @@ const Dashboard: React.FC = async () => {
         </div>
     );
 };
-
-export default Dashboard;

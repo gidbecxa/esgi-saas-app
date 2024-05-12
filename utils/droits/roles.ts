@@ -1,63 +1,66 @@
-"use server"
+// "use server"
 
-import { createClient } from "../supabase/server";
-import { redirect } from "next/navigation";
+// import { createClient } from "../supabase/server";
 
-const supabase = createClient();
+// export const checkAdminRole = async () => {
+//     const supabase = createClient();
 
-export const checkAdminRole = async () => {
-    const { data: { user }, error } = await supabase.auth.getUser();
+//     const { data: { user }, error } = await supabase.auth.getUser();
 
-    if (!user) {
-        console.log("User not found!");
-        return;
-    }
+//     if (!user) {
+//         console.log("User not found!");
+//         return;
+//     }
 
-    const { data: userData, error: userError } = await supabase.from('users').select('role').eq('email', user?.email ?? '');
-    console.log("User data: ", userData);
+//     const { data: userData, error: userError } = await supabase.from('users').select('role').eq('email', user?.email ?? '');
+//     console.log("User data: ", userData);
 
-    if (userError) {
-        console.error('Couldn\'t fetch user\'s data: ', userError);
-        return false;
-    }
+//     if (userError) {
+//         console.error('Couldn\'t fetch user\'s data: ', userError);
+//         return false;
+//     }
 
-    return userData?.[0]?.role === "admin";
-};
+//     return userData?.[0]?.role === "admin";
+// };
 
-export const checkComptableRole = async () => {
-    const { data: { user }, error } = await supabase.auth.getUser();
+// export const checkComptableRole = async () => {
+//     const supabase = createClient();
 
-    if (!user) {
-        console.log("User not found!");
-        return;
-    }
+//     const { data: { user }, error } = await supabase.auth.getUser();
 
-    const { data: userData, error: userError } = await supabase.from('users').select('role').eq('email', user?.email ?? '');
-    console.log("User data: ", userData);
+//     if (!user) {
+//         console.log("User not found!");
+//         return;
+//     }
 
-    if (userError) {
-        console.error('Couldn\'t fetch user\'s data: ', userError);
-        return false;
-    }
+//     const { data: userData, error: userError } = await supabase.from('users').select('role').eq('email', user?.email ?? '');
+//     console.log("User data: ", userData);
 
-    return userData?.[0]?.role === "comptable";
-};
+//     if (userError) {
+//         console.error('Couldn\'t fetch user\'s data: ', userError);
+//         return false;
+//     }
 
-export const checkCommercialRole = async () => {
-    const { data: { user }, error } = await supabase.auth.getUser();
+//     return userData?.[0]?.role === "comptable";
+// };
 
-    if (!user) {
-        console.log("User not found!");
-        return;
-    }
+// export const checkCommercialRole = async () => {
+//     const supabase = createClient();
 
-    const { data: userData, error: userError } = await supabase.from('users').select('role').eq('email', user?.email ?? '');
-    console.log("User data: ", userData);
+//     const { data: { user }, error } = await supabase.auth.getUser();
 
-    if (userError) {
-        console.error('Couldn\'t fetch user\'s data: ', userError);
-        return false;
-    }
+//     if (!user) {
+//         console.log("User not found!");
+//         return;
+//     }
 
-    return userData?.[0]?.role === "commercial";
-};
+//     const { data: userData, error: userError } = await supabase.from('users').select('role').eq('email', user?.email ?? '');
+//     console.log("User data: ", userData);
+
+//     if (userError) {
+//         console.error('Couldn\'t fetch user\'s data: ', userError);
+//         return false;
+//     }
+
+//     return userData?.[0]?.role === "commercial";
+// };

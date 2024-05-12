@@ -6,22 +6,43 @@ import { Textarea } from '@nextui-org/react';
 import { redirect } from 'next/navigation';
 import { v4 as uuidv4 } from "uuid";
 import AccessDeniedModal from '@/components/AccessDenied';
-import { checkCommercialRole } from '@/utils/droits/roles';
+// import { checkCommercialRole } from '@/utils/droits/roles';
 
 export default async function ExpenseForm() {
-    const supabase = createClient();
+    /* const supabase = createClient();
     const { data: { user }, error } = await supabase.auth.getUser();
 
     if (!user) {
         return redirect("/login");
-    }
+    } */
+
+    const checkCommercialRole = async () => {
+        const supabase = createClient();
+
+        const { data: { user }, error } = await supabase.auth.getUser();
+
+        if (!user) {
+            console.log("User not found!");
+            return redirect("/login");
+        }
+
+        const { data: userData, error: userError } = await supabase.from('users').select('role').eq('email', user?.email ?? '');
+        console.log("User data: ", userData);
+
+        if (userError) {
+            console.error('Couldn\'t fetch user\'s data: ', userError);
+            return false;
+        }
+
+        return userData?.[0]?.role === "commercial";
+    };
 
     const isCommercial = await checkCommercialRole();
 
     if (!isCommercial) {
         return <AccessDeniedModal />
     }
-    
+
     const handleSubmit = async (formData: FormData) => {
         "use server"
 
