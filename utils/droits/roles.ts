@@ -9,7 +9,8 @@ export const checkAdminRole = async () => {
     const { data: { user }, error } = await supabase.auth.getUser();
 
     if (!user) {
-        return redirect("/login");
+        console.log("User not found!");
+        return;
     }
 
     const { data: userData, error: userError } = await supabase.from('users').select('role').eq('email', user?.email ?? '');
@@ -27,7 +28,8 @@ export const checkComptableRole = async () => {
     const { data: { user }, error } = await supabase.auth.getUser();
 
     if (!user) {
-        return redirect("/login");
+        console.log("User not found!");
+        return;
     }
 
     const { data: userData, error: userError } = await supabase.from('users').select('role').eq('email', user?.email ?? '');
@@ -45,7 +47,8 @@ export const checkCommercialRole = async () => {
     const { data: { user }, error } = await supabase.auth.getUser();
 
     if (!user) {
-        return redirect("/login");
+        console.log("User not found!");
+        return;
     }
 
     const { data: userData, error: userError } = await supabase.from('users').select('role').eq('email', user?.email ?? '');

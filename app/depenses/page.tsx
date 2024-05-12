@@ -7,8 +7,17 @@ import ChevronDown from '@/assets/chevron-down-svgrepo-com.svg';
 import SearchButton from '@/assets/search-4-svgrepo-com.svg'
 import AccessDeniedModal from '@/components/AccessDenied';
 import { checkComptableRole } from '@/utils/droits/roles';
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
 
 const Dashboard: React.FC = async () => {
+    const supabase = createClient();
+    const { data: { user }, error } = await supabase.auth.getUser();
+
+    if (!user) {
+        return redirect("/login");
+    }
+
     const isComptable = await checkComptableRole();
 
     if (!isComptable) {

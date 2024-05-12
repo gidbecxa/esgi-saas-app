@@ -15,6 +15,13 @@ export default async function CreateUserAccount({
 }: {
     searchParams: { message: string };
 }) {
+    const supabase = createClient();
+    const { data: { user }, error } = await supabase.auth.getUser();
+
+    if (!user) {
+        return redirect("/login");
+    }
+
     const isAdmin = await checkAdminRole();
     // console.log("User is admin?", isAdmin);
 

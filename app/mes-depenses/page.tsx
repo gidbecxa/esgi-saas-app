@@ -8,8 +8,17 @@ import ChevronDown from '@/assets/chevron-down-svgrepo-com.svg';
 import SearchButton from '@/assets/search-4-svgrepo-com.svg'
 import { checkCommercialRole } from '@/utils/droits/roles';
 import AccessDeniedModal from '@/components/AccessDenied';
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
 
 const MesDepenses: React.FC = async () => {
+    const supabase = createClient();
+    const { data: { user }, error } = await supabase.auth.getUser();
+
+    if (!user) {
+        return redirect("/login");
+    }
+
     const isCommercial = await checkCommercialRole();
     // console.log("User is commercial?", isCommercial);
 

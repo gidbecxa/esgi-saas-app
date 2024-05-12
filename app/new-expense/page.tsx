@@ -1,13 +1,27 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
-import { createClient } from '@/utils/supabase/client';
+import { createClient } from '@/utils/supabase/server';
 import { SubmitButton } from '../login/submit-button';
 import DeployButton from '@/components/DeployButton';
 import AuthButton from '@/components/AuthButton';
 import { Textarea } from '@nextui-org/react';
 import { redirect } from 'next/navigation';
 import { v4 as uuidv4 } from "uuid";
+import AccessDeniedModal from '@/components/AccessDenied';
+import { checkCommercialRole } from '@/utils/droits/roles';
 
-export default function ExpenseForm() {
+export default async function ExpenseForm() {
+    const supabase = createClient();
+    const { data: { user }, error } = await supabase.auth.getUser();
+
+    if (!user) {
+        return redirect("/login");
+    }
+
+    const isCommercial = await checkCommercialRole();
+
+    if (!isCommercial) {
+        return <AccessDeniedModal />
+    }
+    
     const handleSubmit = async (formData: FormData) => {
         "use server"
 
@@ -54,7 +68,7 @@ export default function ExpenseForm() {
                     description,
                     file_url: documentUrl,
                     created_at: currentDate,
-                    status: "attente",
+                    status: "en attente",
                 }
             ]);
 
